@@ -1,3 +1,6 @@
+# Fork by JayyFoxx
+# Currently working on updating to support Blender version 4.0
+
 # Cats Blender Plugin (0.19.0)
 
 A tool designed to shorten steps needed to import and optimize models into VRChat.
