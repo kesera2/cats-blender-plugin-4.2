@@ -1,0 +1,58 @@
+name: Create Release on Merge to Master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch all tags
+        run: git fetch --tags
+
+      - name: Get latest semver tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git tag --list 'v*' --sort=-v:refname | head -n 1)
+          echo "Latest tag: $latest_tag"
+          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+
+      - name: Bump patch version
+        id: bump_version
+        run: |
+          if [ -z "${{ env.LATEST_TAG }}" ]; then
+            new_tag="v0.1.0"
+          else
+            IFS='.' read -r major minor patch <<<"${{ env.LATEST_TAG#v }}"
+            patch=$((patch + 1))
+            new_tag="v${major}.${minor}.${patch}"
+          fi
+          echo "New tag: $new_tag"
+          echo "NEW_TAG=$new_tag" >> $GITHUB_ENV
+
+      - name: Create archive
+        run: |
+          git archive --format=zip --prefix=cats-blender-plugin/ -o cats-blender-plugin-4.2.zip HEAD
+
+      - name: Create and push new tag
+        run: |
+          git tag ${{ env.NEW_TAG }}
+          git push origin ${{ env.NEW_TAG }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.NEW_TAG }}
+          name: Release ${{ env.NEW_TAG }}
+          files: cats-blender-plugin-4.2.zip
