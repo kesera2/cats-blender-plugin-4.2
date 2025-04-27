@@ -1,5 +1,5 @@
 # Fork by JayyFoxx
-# Currently working on updating to support Blender version 4.0
+# Currently working on updating to support Blender version 4.2
 
 # Cats Blender Plugin (0.19.0)
 
@@ -42,7 +42,7 @@ Join our Discord to report errors, suggestions and make comments!
  - If you have custom Python installed which Blender might use, you need to have Numpy installed
 
 ## Installation
- - Download the plugin: **[Cats Blender Plugin](https://github.com/OneLegitDev/cats-blender-plugin-4.0/archive/master.zip)**
+ - Download the plugin: **[Cats Blender Plugin](https://github.com/kesera2/cats-blender-plugin-4.2/releases/download/v0.1.0/cats-blender-plugin-4.2.zip)**
    - **Important: Do NOT extract the downloaded zip! You will need the zip file during installation!**
  - Install the addon in blender like so:
    - *This shows Blender 2.79. In Blender 2.80+ go to Edit > Preferences > Add-ons. Also you don't need to save the user settings there.*
